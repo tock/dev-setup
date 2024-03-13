@@ -18,11 +18,16 @@ RUN apt update
 RUN apt install -y gcc-arm-none-eabi gcc-riscv64-unknown-elf
 
 # Install needed tools
-RUN apt install -y git build-essential wget rsync zip
-RUN apt install -y python3 python3-pip
+RUN apt install -y git build-essential wget rsync zip curl
+RUN apt install -y python3 python3-pip python3-venv
 
-# Setup Rust
+# Install pipx
+RUN pip3 install pipx
+ENV PATH="/root/.local/bin:${PATH}"
+
+# Install Rustup
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Clone and compile the kernel
 RUN git clone https://github.com/tock/tock
@@ -36,7 +41,7 @@ RUN cd libtock-c/examples/cxx_hello && make
 
 # Clone and build libtock-rs
 RUN git clone https://github.com/tock/libtock-rs
-RUN cd libtock-rs && make nrf252840 EXAMPLE=blink
+RUN cd libtock-rs && make nrf52840 EXAMPLE=blink
 
 # Install tockloader
-RUN pip install tockloader
+RUN pipx install tockloader
