@@ -59,14 +59,13 @@ Vagrant.configure("2") do |config|
 
   # Install required packages
   config.vm.provision "shell", inline: <<-SHELL
-    add-apt-repository ppa:team-gcc-arm-embedded/ppa
     apt-get update
-    apt-get install -q -y build-essential git gcc-arm-embedded
+    apt-get install -q -y build-essential git gcc-arm-none-eabi gcc-riscv64-unknown-elf
   SHELL
 
   # Set up rust development environment
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
-    wget https://sh.rustup.rs -O rustup.sh && sh rustup.sh -y
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     source ~/.profile
   SHELL
 
