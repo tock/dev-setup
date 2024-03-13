@@ -1,6 +1,9 @@
 # Packer-based Tutorial / Development VM Image
 
-Build instructions:
+This folder contains instructions and steps for creating a virtual machine
+image with the Tock repositories setup and tools installed.
+
+## Build Instructions
 
 1. Install VirtualBox and ensure that you can run a VM as an unprivileged user.
 2. Install HashiCorp Packer.

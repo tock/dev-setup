@@ -36,12 +36,12 @@
           "{{.Name}}",
           "--nat-localhostreachable1",
           "on",
-	  "--vram",
-	  "128",
-	  "--graphicscontroller",
-	  "vboxvga",
-	  "--usb-ohci",
-	  "on"
+          "--vram",
+          "128",
+          "--graphicscontroller",
+          "vboxvga",
+          "--usb-ohci",
+          "on"
         ]
       ],
 

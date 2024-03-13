@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-JLINK_VERSION="766"
+JLINK_VERSION="796"
 JLINK_URL="https://www.segger.com/downloads/jlink/JLink_Linux_V${JLINK_VERSION}_x86_64.deb"
 
 cat <<EOF
