@@ -40,6 +40,8 @@ autoinstall:
     - htop
     - nload
     - tmux
+    - gcc-arm-none-eabi
+    - gcc-riscv64-unknown-elf
 
   # This adds the default snaps found on a 22.04 Ubuntu Desktop system.
   # Any desired additional snaps may also be listed here.
@@ -114,13 +116,19 @@ autoinstall:
     # Enable password-less sudo for the tock user:
     - "curtin in-target -- /bin/bash -c '\
         mkdir -p /etc/sudoers.d; \
-	chmod 0755 /etc/sudoers.d; \
-	echo \"tock ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/tock; \
-	chmod 0440 /etc/sudoers.d/tock; \
-	chown -Rf root:root /etc/sudoers.d; \
-	systemctl disable apt-daily.service; \
-	systemctl disable apt-daily.timer; \
-	systemctl disable apt-daily-upgrade.service; \
-	systemctl disable apt-daily-upgrade.timer; \
-	exit 0\
+        chmod 0755 /etc/sudoers.d; \
+        echo \"tock ALL=(ALL) NOPASSWD: ALL\" > /etc/sudoers.d/tock; \
+        chmod 0440 /etc/sudoers.d/tock; \
+        chown -Rf root:root /etc/sudoers.d; \
+        systemctl disable apt-daily.service; \
+        systemctl disable apt-daily.timer; \
+        systemctl disable apt-daily-upgrade.service; \
+        systemctl disable apt-daily-upgrade.timer; \
+        exit 0\
       '"
+
+    # Disable apparmor
+    - "curtin in-target -- systemctl mask apparmor.service"
+
+    # Disable systemd-networkd-wait-online, as this may hang the boot process:
+    - "curtin in-target -- systemctl mask systemd-networkd-wait-online.service"
